@@ -13,13 +13,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build Docker image
-        run: docker build -t nikitachursin/cd_docker_project:latest .
+        run: docker build -t cnflkt/cd_docker_project:latest .
 
       - name: Log in to Docker Hub
         run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u '${{ secrets.DOCKER_USERNAME }}' --password-stdin
 
       - name: Push Docker image to Docker Hub
-        run: docker push nikitachursin/cd_docker_project:latest
+        run: docker push cnflkt/cd_docker_project:latest
 
   deploy:
     needs: build
@@ -33,7 +33,7 @@ jobs:
           key: '${{ secrets.SSH_PRIVATE_KEY }}'
           port: '${{ secrets.SSH_PORT }}'
           script: |
-            cd /home/nchursin
+            cd /home/cnflkt
             docker-compose pull
             docker-compose down
             docker-compose up -d
